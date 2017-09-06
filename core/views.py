@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 from .models import *
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from .forms import SignUpForm
+# from .forms import SignUpForm
 import json
 from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
@@ -25,24 +25,23 @@ class LazyEncoder(DjangoJSONEncoder):
 
 @login_required(login_url="/login/")
 def home(request):
-   
     return render(request, 'index.html')
 
 
-@login_required
-def cadastro(request):
-    if request.method == "POST":
-        sign_up_form = SignUpForm(request.POST)
+# @login_required
+# def cadastro(request):
+#     if request.method == "POST":
+#         sign_up_form = SignUpForm(request.POST)
 
-        if sign_up_form.is_valid():
-            User = sign_up_form.save(commit=False)
-            User.save()
+#         if sign_up_form.is_valid():
+#             User = sign_up_form.save(commit=False)
+#             User.save()
 
-            return redirect('core.views.home')
-    else:
-        sign_up_form = SignUpForm()
+#             return redirect('core.views.home')
+#     else:
+#         sign_up_form = SignUpForm()
 
-    return render(request, 'forms.html', {'signup_form': SignUpForm})
+#     return render(request, 'forms.html', {'signup_form': SignUpForm})
 
 @login_required
 def get_data(request, usuario):
@@ -62,8 +61,6 @@ def get_data(request, usuario):
         'names': json.dumps(names),
         'entradas': json.dumps(entradas),
     }
-
-
 
     return JsonResponse(context, safe=False)
 
